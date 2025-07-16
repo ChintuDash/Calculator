@@ -68,6 +68,11 @@
 }
 
         function speaktext(text){
-            const msg = new SpeechSynthesisUtterance(text);            
+          window.speechSynthesis.cancel();
+
+            const msg = new SpeechSynthesisUtterance(text);  
+            msg.rate=1;
+            msg.pitch=1;
+            msg.volume=3;          
             window.speechSynthesis.speak(msg);            
         }
