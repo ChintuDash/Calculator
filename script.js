@@ -2,19 +2,37 @@
 
         function addtext(a){                     
             if(a === "*"){
-                display.value =display.value+= "×";
+                display.value += "×";
             }
             else{
-                display.value=display.value+=a;  
+                display.value += a;  
             }
             display.style.color="black";
-        }
+        }    
+
 
         function result(){
-            display.style.color="green";
-              let expression = display.value;
-           
+            display.style.color = "green";
+            let expression = display.value;
+
+            // Replace symbols for actual calculation
             expression = expression.replace(/×/gi, '*').replace(/÷/gi, '/');
+
+            // Handle % expressions like 100+10%
+            expression = expression.replace(/(\d+(?:\.\d+)?)\s*([\+\-\*\/])\s*(\d+(?:\.\d+)?)%/g, function(match, base, operator, percentValue) {
+                percentValue = parseFloat(percentValue);
+                base = parseFloat(base);
+
+                switch(operator){
+                    case '+': return base + (base * percentValue / 100);
+                    case '-': return base - (base * percentValue / 100);
+                    case '*': return base * (percentValue / 100);
+                    case '/': return base / (percentValue / 100);
+                }
+            });
+
+            // If single % at end like 50%, convert to 50/100
+            expression = expression.replace(/(\d+(?:\.\d+)?)%/, (match, val) => parseFloat(val) / 100);
 
             try {
                 display.value = eval(expression);
@@ -22,7 +40,9 @@
                 display.value = 'Error';
             }
             speaktext(`result ${display.value}`);
-        }
+      }
+
+
         function cls(){
             display.value='';
         }
@@ -32,47 +52,62 @@
         }
 
 
-        function per() {
-  let exp = display.value;
-
-  // Check if there is an operator
-  let match = exp.match(/(\d+)\s*([\+\-\*\/])\s*(\d+)$/);
-  if (match) {
-    let base = parseFloat(match[1]);
-    let operator = match[2];
-    let percentValue = parseFloat(match[3]);
-
-    let result = 0;
-    switch (operator) {
-      case '+':
-        result = base + (base * percentValue / 100);
-        break;
-      case '-':
-        result = base - (base * percentValue / 100);
-        break;
-      case '*':
-        result = base * (percentValue / 100);
-        break;
-      case '/':
-        result = base / (percentValue / 100);
-        break;
-    }
-    display.value = result;
-  } else {
-    // Just convert single number to percent
-    let value = parseFloat(display.value);
-    if (!isNaN(value)) {
-      display.value = value / 100;
-    }
-  }
+      function per() {
+    display.value += '%';
+    display.style.color = "black";
 }
 
-        function speaktext(text){
-          window.speechSynthesis.cancel();
 
-            const msg = new SpeechSynthesisUtterance(text);  
-            msg.rate=1;
-            msg.pitch=1;
-            msg.volume=3;          
-            window.speechSynthesis.speak(msg);            
-        }
+  
+
+
+
+        // Preload voices on page load
+window.speechSynthesis.onvoiceschanged = () => {
+    window.speechSynthesis.getVoices();
+};
+
+// Warm up the speech engine with dummy speech
+window.addEventListener('load', () => {
+    const dummy = new SpeechSynthesisUtterance(" ");
+    window.speechSynthesis.speak(dummy);
+});
+
+// Your speak function
+function speaktext(text) {
+    window.speechSynthesis.cancel();
+
+    const msg = new SpeechSynthesisUtterance(text);
+    msg.rate = 1;
+    msg.pitch = 1;
+    msg.volume = 1; // Must be between 0 and 1
+
+    window.speechSynthesis.speak(msg);
+}
+
+
+function addAndSpeak(value) {
+    addtext(value);
+    const speakMap = {
+        '+': 'plus',
+        '-': 'minus',
+        '*': 'multiply',
+        '÷': 'divide',
+        '(': 'open parentheses',
+        ')': 'close parentheses',
+        '%': 'percentage',
+        '.': 'point'
+    };
+
+    speaktext(speakMap[value] || value);
+}
+
+function clearAndspeak(){
+    cls();
+    speaktext("clear");
+}
+function delAndspeak(){
+    del();
+    speaktext("Backspace");
+}
+

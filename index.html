@@ -14,28 +14,28 @@
         <div class="container" id="box">
             <input type="text" placeholder="0" readonly maxlength="10" id="display">
             <div class="button-box">
-                <button onClick="addtext('1')" onmouseover="speaktext('1')">1</button>
-                <button onClick="addtext('2')" onmouseover="speaktext('2')">2</button>
-                <button onClick="addtext('3')" onmouseover="speaktext('3')">3</button>            
-                <button onClick="del()" onmouseover="speaktext('Backspace')">⌫</button>              
-                <button onClick="addtext('4')" onmouseover="speaktext('4')">4</button>
-                <button onClick="addtext('5')" onmouseover="speaktext('5')">5</button>
-                <button onClick="addtext('6')" onmouseover="speaktext('6')">6</button>            
-                <button onClick="cls()"  onmouseover="speaktext('clear')">C</button>              
-                <button onClick="addtext('7')" onmouseover="speaktext('7')">7</button>
-                <button onClick="addtext('8')" onmouseover="speaktext('8')">8</button>
-                <button onClick="addtext('9')" onmouseover="speaktext('9')">9</button>
-                <button onClick="addtext('0')" onmouseover="speaktext('0')">0</button>                                     
-                <button onClick="addtext('+')" onmouseover="speaktext('plus')">+</button>
-                <button onClick="addtext('-')" onmouseover="speaktext('minus')">−</button>
-                <button onClick="addtext('*')" onmouseover="speaktext('Multiply')">×</button>
-                <button onClick="addtext('÷')" onmouseover="speaktext('Divide')">÷</button>
-                <button onClick="addtext('(')" onmouseover="speaktext('open Parentheses')">(</button>
-                <button onClick="addtext(')')" onmouseover="speaktext('close Parentheses')">)</button>
-                <button onClick="per()" onmouseover="speaktext('Percentage')">%</button>                
-                <button onClick="addtext('.')"  onmouseover="speaktext('point')">.</button>
+                <button onClick="addAndSpeak('1')" >1</button>
+                <button onClick="addAndSpeak('2')" >2</button>
+                <button onClick="addAndSpeak('3')" >3</button>            
+                <button onClick="delAndspeak()">⌫</button>              
+                <button onClick="addAndSpeak('4')" >4</button>
+                <button onClick="addAndSpeak('5')" >5</button>
+                <button onClick="addAndSpeak('6')" >6</button>            
+                <button onClick="clearAndspeak()">C</button>              
+                <button onClick="addAndSpeak('7')" >7</button>
+                <button onClick="addAndSpeak('8')" >8</button>
+                <button onClick="addAndSpeak('9')" >9</button>
+                <button onClick="addAndSpeak('0')" >0</button>                                     
+                <button onClick="addAndSpeak('+')" >+</button>
+                <button onClick="addAndSpeak('-')" >−</button>
+                <button onClick="addAndSpeak('*')" >×</button>
+                <button onClick="addAndSpeak('÷')" >÷</button>
+                <button onClick="addAndSpeak('(')" >(</button>
+                <button onClick="addAndSpeak(')')" >)</button>
+                <button onClick="addAndSpeak('%')" >%</button>                
+                <button onClick="addAndSpeak('.')"  >.</button>
                 <!-- <button onClick="addtext('00')"  onmouseover="speaktext('double zero')">00</button> -->
-                <button onClick="result()" id="equal"  onmouseover="speaktext('Equals')">=</button>
+                <button onClick="result()" id="equal" >=</button>
             </div>
         </div>
     </div>
