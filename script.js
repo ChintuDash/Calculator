@@ -62,28 +62,30 @@
 
 
 
-        // Preload voices on page load
+        // speek function
 window.speechSynthesis.onvoiceschanged = () => {
     window.speechSynthesis.getVoices();
 };
 
-// Warm up the speech engine with dummy speech
+
 window.addEventListener('load', () => {
     const dummy = new SpeechSynthesisUtterance(" ");
     window.speechSynthesis.speak(dummy);
 });
 
-// Your speak function
+
 function speaktext(text) {
     window.speechSynthesis.cancel();
 
     const msg = new SpeechSynthesisUtterance(text);
     msg.rate = 1;
     msg.pitch = 1;
-    msg.volume = 1; // Must be between 0 and 1
+    msg.volume = 1; 
 
     window.speechSynthesis.speak(msg);
 }
+
+
 
 
 function addAndSpeak(value) {
